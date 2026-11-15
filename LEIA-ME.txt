@@ -1,0 +1,19 @@
+CANTINAPRO OFFLINE — FUNDAÇÃO INICIAL
+
+O QUE É
+Esta é a primeira estrutura do aplicativo, criada como arquivos próprios. Não exige executar SQL no Editor do Supabase e não altera o projeto Supabase existente.
+
+O QUE JÁ FOI PREPARADO
+- Tela inicial simples.
+- Banco local IndexedDB chamado cantinapro_offline.
+- Estrutura inicial para produtos, categorias, clientes, fornecedores, compras, itens de compra, vendas, itens de venda, sessões de caixa, movimentos de caixa, despesas, configurações e auditoria.
+- Arquivos básicos de PWA e cache para funcionamento offline depois da primeira abertura em um endereço HTTPS/servidor local compatível.
+
+IMPORTANTE
+Esta ainda NÃO é a aplicação comercial completa. Não há telas de cadastro, PDV, estoque ou impressão implementadas nesta etapa. Não use dados reais ainda.
+
+COMO ABRIR
+Para testar corretamente o PWA e o Service Worker, os arquivos precisam ser servidos por localhost ou HTTPS. Abrir o index.html diretamente pelo gerenciador de arquivos (file://) pode mostrar a tela, mas não ativa o modo instalável nem o cache offline.
+
+PRÓXIMA ETAPA
+Validar esta fundação e, em seguida, construir o primeiro módulo sem mexer no CantinaPro atual nem no Supabase existente.

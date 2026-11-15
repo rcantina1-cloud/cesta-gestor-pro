@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173b2b">
+  <title>CantinaPro Offline</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="mark">C</span>
+      <div>
+        <strong>CantinaPro</strong>
+        <small>Gestão comercial offline</small>
+      </div>
+    </div>
+    <span class="status" id="connectionStatus">Verificando...</span>
+  </header>
+
+  <main class="wrap">
+    <section class="welcome">
+      <p class="eyebrow">GESTÃO COMERCIAL</p>
+      <h1>Seu comércio, sob controle.</h1>
+      <p>Gerencie seus produtos e categorias diretamente neste aparelho.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Estado do sistema</h2>
+      <div class="stats">
+        <div>
+          <strong id="dbState">Preparando</strong>
+          <small>Banco local</small>
+        </div>
+        <div>
+          <strong id="productCount">0</strong>
+          <small>Produtos cadastrados</small>
+        </div>
+      </div>
+      <p class="message" id="message">Inicializando...</p>
+    </section>
+
+    <nav class="modules">
+      <button type="button" data-page="products">📦<span>Produtos</span></button>
+      <button type="button" data-page="categories">📁<span>Categorias</span></button>
+      <button type="button" data-page="stock">📊<span>Estoque</span></button>
+      <button type="button" data-page="clients">👥<span>Clientes</span></button>
+      <button type="button" data-page="suppliers">🚚<span>Fornecedores</span></button>
+      <button type="button" data-page="purchases">🛒<span>Compras</span></button>
+      <button type="button" data-page="sales">💰<span>Vendas</span></button>
+      <button type="button" data-page="cash">🏧<span>Caixa</span></button>
+      <button type="button" data-page="expenses">💸<span>Despesas</span></button>
+      <button type="button" data-page="reports">📈<span>Relatórios</span></button>
+      <button type="button" data-page="settings">⚙️<span>Ajustes</span></button>
+    </nav>
+
+    <section class="panel" id="productsPage" data-view="products">
+      <h2>Cadastrar produto</h2>
+
+      <form id="productForm">
+        <label for="productName">Nome do produto</label>
+        <input id="productName" required placeholder="Ex.: Arroz">
+
+        <label for="productBarcode">Código de barras</label>
+        <input id="productBarcode" placeholder="Código opcional">
+
+        <label for="productCategory">Categoria</label>
+        <select id="productCategory">
+          <option value="">Sem categoria</option>
+        </select>
+
+        <label for="productCost">Preço de custo (R$)</label>
+        <input id="productCost" type="number" min="0" step="0.01" value="0">
+
+        <label for="productPrice">Preço de venda (R$)</label>
+        <input id="productPrice" type="number" min="0" step="0.01" required>
+
+        <label for="productStock">Estoque inicial</label>
+        <input id="productStock" type="number" min="0" step="0.001" value="0">
+
+        <label for="productType">Tipo de venda</label>
+        <select id="productType"><option value="unidade">Por unidade</option><option value="peso">Por peso</option></select>
+
+        <button type="submit" id="productSubmit">Salvar produto</button>
+        <button type="button" id="productCancel" hidden>Cancelar edição</button>
+      </form>
+    </section>
+
+    <section class="panel" id="categoriesPage" data-view="categories" hidden>
+      <h2>Cadastrar categoria</h2>
+      <form id="categoryForm">
+        <label for="categoryName">Nome da categoria</label>
+        <input id="categoryName" required placeholder="Ex.: Mercearia">
+        <button type="submit">Salvar categoria</button>
+      </form>
+      <div id="categoryList"></div>
+    </section>
+
+    <section class="panel" id="productListPage" data-view="products">
+      <h2>Produtos cadastrados</h2>
+      <input id="productSearch" placeholder="Pesquisar produto...">
+      <div id="productList"></div>
+    </section>
+    <section class="panel" id="modPage" data-view="stock clients suppliers purchases sales cash expenses reports settings" hidden></section>
+  </main>
+  <div id="toast" hidden></div>
+  <pre id="cupomPrint"></pre>
+
+  <footer>CantinaPro Offline</footer>
+
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+  <script type="module" src="integracao.js"></script>
+</body>
+</html>
