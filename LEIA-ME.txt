@@ -1,19 +1,30 @@
-CANTINAPRO OFFLINE — FUNDAÇÃO INICIAL
+GESTOR PRO — pacote revisado para validação antes da publicação
 
-O QUE É
-Esta é a primeira estrutura do aplicativo, criada como arquivos próprios. Não exige executar SQL no Editor do Supabase e não altera o projeto Supabase existente.
+CONTEÚDO: site estático (index.html, app.js, supa.js, styles.css, manifest, ícones e netlify.toml).
+PUBLICAÇÃO: Netlify > Add new site > Deploy manually > envie o ZIP/pasta.
+PUBLICAÇÃO POR GIT: envie o CONTEÚDO desta pasta para a RAIZ do repositório (package.json, netlify.toml e index.html lado a lado, sem pasta extra por fora). No Netlify, deixe Base directory vazio; Build command e Publish directory são lidos do netlify.toml (npm run build / ".").
 
-O QUE JÁ FOI PREPARADO
-- Tela inicial simples.
-- Banco local IndexedDB chamado cantinapro_offline.
-- Estrutura inicial para produtos, categorias, clientes, fornecedores, compras, itens de compra, vendas, itens de venda, sessões de caixa, movimentos de caixa, despesas, configurações e auditoria.
-- Arquivos básicos de PWA e cache para funcionamento offline depois da primeira abertura em um endereço HTTPS/servidor local compatível.
+CORREÇÃO DO ERRO "package.json não encontrado" (esta revisão)
+- Adicionados package.json (sem dependências; o Supabase continua vindo do CDN) e scripts/verify.mjs, que apenas confere os arquivos antes de publicar.
+- netlify.toml: build = "npm run build", publish = "." e Node 20. Nenhum arquivo do app, supa.js ou configuração do Supabase foi alterado.
 
-IMPORTANTE
-Esta ainda NÃO é a aplicação comercial completa. Não há telas de cadastro, PDV, estoque ou impressão implementadas nesta etapa. Não use dados reais ainda.
 
-COMO ABRIR
-Para testar corretamente o PWA e o Service Worker, os arquivos precisam ser servidos por localhost ou HTTPS. Abrir o index.html diretamente pelo gerenciador de arquivos (file://) pode mostrar a tela, mas não ativa o modo instalável nem o cache offline.
+CORREÇÃO NESTA REVISÃO
+- A exportação JSON agora inclui também os dados de detalhes e pagamentos de vendas, sessões e movimentos de caixa, configurações da empresa, assinaturas, faturas e planos, além das tabelas operacionais já exportadas.
 
-PRÓXIMA ETAPA
-Validar esta fundação e, em seguida, construir o primeiro módulo sem mexer no CantinaPro atual nem no Supabase existente.
+ATENÇÃO — AINDA NÃO É UMA LIBERAÇÃO DEFINITIVA
+1. O formulário de fechamento recebe o valor contado, mas a chamada atual ao banco é apenas fechar_caixa_v2(), sem enviar esse valor. Assim, a diferença é exibida na tela, porém não há evidência no código do site de que o valor contado/diferença seja gravado no Supabase. A função SQL e a estrutura da tabela precisam ser conferidas e corrigidas no banco antes do uso real do fechamento.
+2. As Edge Functions asaas-assinar e o webhook do Asaas não estão dentro deste ZIP. Precisam ser conferidos no Supabase (implantação, segredos e URL do webhook). Nunca coloque a chave secreta do Asaas ou service_role no site.
+3. Este ZIP não contém migrações SQL nem definições das funções RPC. Portanto, a auditoria do front-end não comprova que todas as funções e políticas RLS estejam corretas no Supabase.
+
+SUPABASE
+- O site usa a URL e a chave pública publishable já configuradas em supa.js. Não substitua por service_role.
+- Depois de publicar, configure Authentication > URL Configuration com a URL real do Netlify em Site URL e Redirect URLs.
+- Preserve o projeto Supabase existente. Não crie outro projeto para esta revisão.
+
+TESTES APÓS A VALIDAÇÃO DO BANCO
+- Login e recuperação de senha.
+- Cadastro de produto, estoque, compra, venda e cancelamento.
+- Abertura, movimentação e fechamento do caixa (incluindo gravação do valor contado e diferença).
+- Exportação JSON e impressão 58/80 mm.
+- Assinatura Asaas, pagamento de teste e confirmação pelo webhook.
