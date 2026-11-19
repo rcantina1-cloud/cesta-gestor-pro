@@ -1,3 +1,4 @@
+
 {
   "name": "gestor-pro",
   "version": "1.0.0",
@@ -5,10 +6,11 @@
   "description": "Gestor Pro — site estático (HTML/JS/CSS) com Supabase carregado via CDN. Sem dependências npm.",
   "type": "module",
   "scripts": {
-    "build": "node scripts/verify.mjs",
+    "build": "node scripts/build.mjs",
     "check": "node scripts/verify.mjs"
   },
   "engines": {
     "node": ">=18"
   }
 }
+
